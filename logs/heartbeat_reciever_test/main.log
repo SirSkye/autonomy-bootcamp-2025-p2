@@ -1,0 +1,23 @@
+21:39:20: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\common\modules\logger\logger_main_setup.py | setup_main_logger | 62] main logger initialized
+21:39:21: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | main | 115] Connected!
+21:39:22: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:23: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:24: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:25: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:26: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:27: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:28: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:29: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:30: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:31: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Disconnected
+21:39:32: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Disconnected
+21:39:33: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Disconnected
+21:39:34: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Disconnected
+21:39:35: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:36: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:37: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:38: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:39: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:40: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:41: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
+21:39:42: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\tests\integration\test_heartbeat_receiver.py | read_queue | 73] Drone state: Connected
