@@ -20,7 +20,7 @@ from ..common.modules.logger import logger
 def heartbeat_receiver_worker(
     connection: mavutil.mavfile,
     output_queue: queue_proxy_wrapper.QueueProxyWrapper,
-    controller: worker_controller.WorkerController
+    controller: worker_controller.WorkerController,
 ) -> None:
     """
     Worker process.
@@ -57,6 +57,8 @@ def heartbeat_receiver_worker(
         result = reciever.run()
         output_queue.queue.put("Connected" if result else "Disconnected")
         time.sleep(1)
+
+
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
 # =================================================================================================

@@ -113,7 +113,7 @@ class Telemetry:
         alt_msg = None
         pos_msg = None
         recent_boot_time = None
-        
+
         while time.time() - start_time <= 1:
             try:
                 msg = self.__connection.recv_match()
@@ -149,7 +149,7 @@ class Telemetry:
             alt_msg.yaw,
             alt_msg.rollspeed,
             alt_msg.pitchspeed,
-            alt_msg.yawspeed
+            alt_msg.yawspeed,
         )
 
 

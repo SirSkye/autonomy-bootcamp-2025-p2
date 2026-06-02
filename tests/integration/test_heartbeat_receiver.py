@@ -48,9 +48,7 @@ def start_drone() -> None:
 # =================================================================================================
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
-def stop(
-    controller: worker_controller.WorkerController
-) -> None:
+def stop(controller: worker_controller.WorkerController) -> None:
     """
     Stop the workers.
     """
@@ -73,6 +71,7 @@ def read_queue(
             main_logger.info(f"Drone state: {state}")
         except:
             pass
+
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -138,11 +137,7 @@ def main() -> int:
     # Read the main queue (worker outputs)
     threading.Thread(target=read_queue, args=(output_queue, controller, main_logger)).start()
 
-    heartbeat_receiver_worker.heartbeat_receiver_worker(
-        connection, 
-        output_queue, 
-        controller
-    )
+    heartbeat_receiver_worker.heartbeat_receiver_worker(connection, output_queue, controller)
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
     # =============================================================================================

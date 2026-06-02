@@ -47,7 +47,16 @@ class Command:  # pylint: disable=too-many-instance-attributes
         Falliable create (instantiation) method to create a Command object.
         """
         try:
-            return True, Command(cls.__private_key, connection, target, height_tolerance, yaw_tolerance, z_speed, turning_speed, local_logger)
+            return True, Command(
+                cls.__private_key,
+                connection,
+                target,
+                height_tolerance,
+                yaw_tolerance,
+                z_speed,
+                turning_speed,
+                local_logger,
+            )
         except Exception as e:
             local_logger.info(f"Failed to create HeartbeatSender: {e}")
             return False, None
@@ -76,10 +85,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.__velocity_total = [0, 0, 0]
         self.__velocity_count = 0
 
-    def run(
-        self,
-        telemetry: telemetry.TelemetryData
-    ):
+    def run(self, telemetry: telemetry.TelemetryData):
         """
         Make a decision based on received telemetry data.
         """
@@ -88,7 +94,9 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.__velocity_total[1] += telemetry.y_velocity
         self.__velocity_total[2] += telemetry.z_velocity
         self.__velocity_count += 1
-        self.__logger.info(f"Avg Velocities: {(self.__velocity_total[0] / self.__velocity_count, self.__velocity_total[1] / self.__velocity_count, self.__velocity_total[2] / self.__velocity_count)}")
+        self.__logger.info(
+            f"Avg Velocities: {(self.__velocity_total[0] / self.__velocity_count, self.__velocity_total[1] / self.__velocity_count, self.__velocity_total[2] / self.__velocity_count)}"
+        )
 
         # Use COMMAND_LONG (76) message, assume the target_system=1 and target_componenet=0
         # The appropriate commands to use are instructed below
@@ -145,7 +153,8 @@ class Command:  # pylint: disable=too-many-instance-attributes
                 self.__logger.error(f"Error sending yaw command: {e}")
             return f"CHANGE YAW: {yaw_error}"
         return None
-        
+
+
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
 # =================================================================================================

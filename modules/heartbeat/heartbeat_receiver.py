@@ -33,10 +33,7 @@ class HeartbeatReceiver:
             return False, None
 
     def __init__(
-        self,
-        key: object,
-        connection: mavutil.mavfile,
-        local_logger: logger.Logger
+        self, key: object, connection: mavutil.mavfile, local_logger: logger.Logger
     ) -> None:
         assert key is HeartbeatReceiver.__private_key, "Use create() method"
         # Do any intializiation here
@@ -65,7 +62,9 @@ class HeartbeatReceiver:
 
             if self.__missed_count >= 5:
                 self.__is_connected = False
-                self.__logger.warning(f"Disconnected from drone. Missed count: {self.__missed_count}")
+                self.__logger.warning(
+                    f"Disconnected from drone. Missed count: {self.__missed_count}"
+                )
         else:
             self.__logger.info(f"Recieved heartbeat. Connected")
             self.__missed_count = 0

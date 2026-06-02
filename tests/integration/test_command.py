@@ -53,16 +53,15 @@ def start_drone() -> None:
 # =================================================================================================
 #                            ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
 # =================================================================================================
-def stop(
-    controller: worker_controller.WorkerController
-) -> None:
+def stop(controller: worker_controller.WorkerController) -> None:
     """
     Stop the workers.
     """
     controller.request_exit()
 
+
 def read_queue(
-    controller : worker_controller.WorkerController,
+    controller: worker_controller.WorkerController,
     output_queue: queue_proxy_wrapper.QueueProxyWrapper,
     main_logger: logger.Logger,
 ) -> None:
@@ -78,10 +77,11 @@ def read_queue(
         except:
             pass
 
+
 def put_queue(
     input_queue: queue_proxy_wrapper.QueueProxyWrapper,
     controller: worker_controller.WorkerController,
-    mocks: "list[telemetry.TelemetryData]"
+    mocks: "list[telemetry.TelemetryData]",
 ) -> None:
     """
     Place mocked inputs into the input queue periodically with period TELEMETRY_PERIOD.
@@ -91,6 +91,7 @@ def put_queue(
             break
         input_queue.queue.put(m)
         time.sleep(TELEMETRY_PERIOD)
+
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -235,7 +236,7 @@ def main() -> int:
     threading.Timer(TELEMETRY_PERIOD * len(path), stop, (controller,)).start()
 
     # Put items into input queue
-    threading.Thread(target=put_queue, args=(input_queue,controller, path)).start()
+    threading.Thread(target=put_queue, args=(input_queue, controller, path)).start()
 
     # Read the main queue (worker outputs)
     threading.Thread(target=read_queue, args=(controller, output_queue, main_logger)).start()
@@ -249,7 +250,7 @@ def main() -> int:
         TURNING_SPEED,
         input_queue,
         output_queue,
-        controller
+        controller,
     )
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑

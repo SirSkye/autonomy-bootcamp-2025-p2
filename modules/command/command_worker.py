@@ -25,7 +25,7 @@ def command_worker(
     turning_speed: float,
     input_queue: queue_proxy_wrapper.QueueProxyWrapper,
     output_queue: queue_proxy_wrapper.QueueProxyWrapper,
-    controller: worker_controller.WorkerController
+    controller: worker_controller.WorkerController,
 ) -> None:
     """
     Worker process.
@@ -64,7 +64,7 @@ def command_worker(
     )
     if not result:
         return
-    
+
     # Main loop: do work.
     while not controller.is_exit_requested():
         try:
@@ -79,6 +79,7 @@ def command_worker(
         if not output:
             continue
         output_queue.queue.put(output)
+
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
