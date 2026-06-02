@@ -29,6 +29,7 @@ class HeartbeatSender:
             return True, HeartbeatSender(cls.__private_key, connection, local_logger)
         except Exception as e:
             local_logger.info(f"Failed to create HeartbeatSender: {e}")
+            return False, None
 
     def __init__(
         self,
