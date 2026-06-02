@@ -18,13 +18,13 @@ from ..common.modules.logger import logger
 # =================================================================================================
 def heartbeat_sender_worker(
     connection: mavutil.mavfile,
-    args,  # Place your own arguments here
-    # Add other necessary worker arguments here
+    sleep_sec: float,
+    controller: worker_controller.WorkerController
 ) -> None:
     """
     Worker process.
-
-    args... describe what the arguments are
+    sleep_sec specfies how often the msgs should be sent
+    controller is how the main process communicates to this worker process.
     """
     # =============================================================================================
     #                          ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -47,8 +47,13 @@ def heartbeat_sender_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (heartbeat_sender.HeartbeatSender)
-
+    result, sender = heartbeat_sender.HeartbeatSender.create(connection, local_logger)
+    if not result:
+        return
     # Main loop: do work.
+    while not controller.is_exit_requested():
+        sender.run()
+        time.sleep(sleep_sec)
 
 
 # =================================================================================================
