@@ -3,18 +3,16 @@ Test the heartbeat reciever worker with a mocked drone.
 """
 
 import multiprocessing as mp
+import queue
 import subprocess
 import threading
 
 from pymavlink import mavutil
 
-from modules.common.modules.logger import logger
-from modules.common.modules.logger import logger_main_setup
+from modules.common.modules.logger import logger, logger_main_setup
 from modules.common.modules.read_yaml import read_yaml
 from modules.heartbeat import heartbeat_receiver_worker
-from utilities.workers import queue_proxy_wrapper
-from utilities.workers import worker_controller
-
+from utilities.workers import queue_proxy_wrapper, worker_controller
 
 MOCK_DRONE_MODULE = "tests.integration.mock_drones.heartbeat_receiver_drone"
 CONNECTION_STRING = "tcp:localhost:12345"
@@ -69,7 +67,7 @@ def read_queue(
             if state is None:
                 break
             main_logger.info(f"Drone state: {state}")
-        except:
+        except queue.Empty:
             pass
 
 

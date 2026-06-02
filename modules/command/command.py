@@ -57,7 +57,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
                 turning_speed,
                 local_logger,
             )
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             local_logger.info(f"Failed to create HeartbeatSender: {e}")
             return False, None
 
@@ -85,14 +85,14 @@ class Command:  # pylint: disable=too-many-instance-attributes
         self.__velocity_total = [0, 0, 0]
         self.__velocity_count = 0
 
-    def run(self, telemetry: telemetry.TelemetryData):
+    def run(self, telemetry_data: telemetry.TelemetryData) -> str | None:
         """
         Make a decision based on received telemetry data.
         """
         # Log average velocity for this trip so far
-        self.__velocity_total[0] += telemetry.x_velocity
-        self.__velocity_total[1] += telemetry.y_velocity
-        self.__velocity_total[2] += telemetry.z_velocity
+        self.__velocity_total[0] += telemetry_data.x_velocity
+        self.__velocity_total[1] += telemetry_data.y_velocity
+        self.__velocity_total[2] += telemetry_data.z_velocity
         self.__velocity_count += 1
         self.__logger.info(
             f"Avg Velocities: {(self.__velocity_total[0] / self.__velocity_count, self.__velocity_total[1] / self.__velocity_count, self.__velocity_total[2] / self.__velocity_count)}"
@@ -103,7 +103,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
 
         # Adjust height using the comand MAV_CMD_CONDITION_CHANGE_ALT (113)
         # String to return to main: "CHANGE_ALTITUDE: {amount you changed it by, delta height in meters}"
-        delta_z = self.__target.z - telemetry.z
+        delta_z = self.__target.z - telemetry_data.z
         if abs(delta_z) > self.__height_tolerance:
             try:
                 self.__connectioin.mav.command_long_send(
@@ -119,7 +119,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
                     0,
                     self.__target.z,
                 )
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 self.__logger.info(f"Error sending alt command: {e}")
                 return None
             return f"CHANGE_ALTITUDE: {delta_z}"
@@ -127,10 +127,12 @@ class Command:  # pylint: disable=too-many-instance-attributes
         # Adjust direction (yaw) using MAV_CMD_CONDITION_YAW (115). Must use relative angle to current state
         # String to return to main: "CHANGING_YAW: {degree you changed it by in range [-180, 180]}"
         # Positive angle is counter-clockwise as in a right handed system
-        desired_yaw = math.atan2(self.__target.y - telemetry.y, self.__target.x - telemetry.x)
+        desired_yaw = math.atan2(
+            self.__target.y - telemetry_data.y, self.__target.x - telemetry_data.x
+        )
         delta_yaw = math.atan2(
-            math.sin(desired_yaw - telemetry.yaw),
-            math.cos(desired_yaw - telemetry.yaw),
+            math.sin(desired_yaw - telemetry_data.yaw),
+            math.cos(desired_yaw - telemetry_data.yaw),
         )
         yaw_error = math.degrees(delta_yaw)
 
@@ -149,7 +151,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
                     0,
                     0,
                 )
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 self.__logger.error(f"Error sending yaw command: {e}")
             return f"CHANGE YAW: {yaw_error}"
         return None

@@ -28,7 +28,7 @@ class HeartbeatReceiver:
         """
         try:
             return True, HeartbeatReceiver(cls.__private_key, connection, local_logger)
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             local_logger.info(f"Failed to create HeartbeatSender: {e}")
             return False, None
 
@@ -52,7 +52,7 @@ class HeartbeatReceiver:
         """
         try:
             msg = self.__connection.recv_match(type="HEARTBEAT", blocking=False)
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.__logger.error(f"Error while attempting to recieve heartbeat: {e}")
             return False
 
@@ -66,7 +66,7 @@ class HeartbeatReceiver:
                     f"Disconnected from drone. Missed count: {self.__missed_count}"
                 )
         else:
-            self.__logger.info(f"Recieved heartbeat. Connected")
+            self.__logger.info("Recieved heartbeat. Connected")
             self.__missed_count = 0
             self.__is_connected = True
 

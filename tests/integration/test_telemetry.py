@@ -5,6 +5,7 @@ Test the telemetry worker with a mocked drone.
 import multiprocessing as mp
 import subprocess
 import threading
+import queue
 
 from pymavlink import mavutil
 
@@ -67,7 +68,7 @@ def read_queue(
             if state is None:
                 break
             main_logger.info(f"Telemetry: {state}")
-        except:
+        except queue.Empty:
             pass
 
 

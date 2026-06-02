@@ -25,11 +25,13 @@ class HeartbeatSender:
         """
         try:
             return True, HeartbeatSender(cls.__private_key, connection, local_logger)
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             local_logger.info(f"Failed to create HeartbeatSender: {e}")
             return False, None
 
-    def __init__(self, key: object, connection: mavutil.mavfile, local_logger: logger.Logger):
+    def __init__(
+        self, key: object, connection: mavutil.mavfile, local_logger: logger.Logger
+    ) -> None:
         assert key is HeartbeatSender.__private_key, "Use create() method"
 
         self.__connection = connection
@@ -47,7 +49,7 @@ class HeartbeatSender:
             )
             self.__logger.info("Heartbeat send successfully")
             return True
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.logger.error(f"Failed to send heartbeat: {e}")
             return False
 

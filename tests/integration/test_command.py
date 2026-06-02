@@ -7,6 +7,7 @@ import multiprocessing as mp
 import subprocess
 import threading
 import time
+import queue
 
 from pymavlink import mavutil
 
@@ -74,7 +75,7 @@ def read_queue(
             if state is None:
                 break
             main_logger.info(f"Command Output: {state}")
-        except:
+        except queue.Empty:
             pass
 
 

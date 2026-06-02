@@ -4,6 +4,7 @@ Command worker to make decisions based on Telemetry Data.
 
 import os
 import pathlib
+import queue
 
 from pymavlink import mavutil
 
@@ -69,7 +70,7 @@ def command_worker(
     while not controller.is_exit_requested():
         try:
             telemetry_data = input_queue.queue.get(block=False)
-        except:
+        except queue.Empty:
             continue
 
         if telemetry_data is None:

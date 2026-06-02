@@ -5,8 +5,8 @@ Main process to setup and manage all the other working processes
 """
 
 import multiprocessing as mp
-import queue
 import time
+import queue
 
 from pymavlink import mavutil
 
@@ -136,7 +136,7 @@ def main() -> int:
         main_logger.error("Failed to create properties for Heartbeat Reciever")
         return -1
 
-    results, telemetry_properties = worker_manager.WorkerProperties.create(
+    result, telemetry_properties = worker_manager.WorkerProperties.create(
         TELEMETRY_WORKER_COUNT,
         telemetry_worker.telemetry_worker,
         (connection),
@@ -163,7 +163,7 @@ def main() -> int:
         return -1
 
     # Create the workers (processes) and obtain their managers
-    worker_managers: list[worker_manager.WorkerManager] = list()
+    worker_managers: list[worker_manager.WorkerManager] = []
     result, heart_beat_sender_manager = worker_manager.WorkerManager.create(
         heartbeat_sender_properties, main_logger
     )
@@ -208,12 +208,12 @@ def main() -> int:
             main_logger.info(f"Heartbeat status: {heartbeat_status}")
             if heartbeat_status == "Disconnected":
                 break
-        except:
+        except queue.Empty:
             pass
         try:
             command_output = command_to_main_queue.queue.get(block=False)
             main_logger.info(f"Command output: {command_output}")
-        except:
+        except queue.empty:
             pass
 
     # Stop the processes

@@ -83,7 +83,7 @@ class Telemetry:
         """
         try:
             return True, Telemetry(cls.__private_key, connection, local_logger)
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             local_logger.error(f"Failed to create Telemetry: {e}")
             return False, None
 
@@ -117,7 +117,7 @@ class Telemetry:
         while time.time() - start_time <= 1:
             try:
                 msg = self.__connection.recv_match()
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 self.__logger.error(f"Error while attempting to recieve telemetry: {e}")
             if not msg:
                 continue
