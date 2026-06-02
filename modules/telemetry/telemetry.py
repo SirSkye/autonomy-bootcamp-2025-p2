@@ -76,29 +76,32 @@ class Telemetry:
     def create(
         cls,
         connection: mavutil.mavfile,
-        args,  # Put your own arguments here
         local_logger: logger.Logger,
-    ):
+    ) -> "tuple[True, Telemetry] | tuple[False, None]":
         """
         Falliable create (instantiation) method to create a Telemetry object.
         """
-        pass  # Create a Telemetry object
+        try:
+            return True, Telemetry(cls.__private_key, connection, local_logger)
+        except Exception as e:
+            local_logger.error(f"Failed to create Telemetry: {e}")
+            return False, None
 
     def __init__(
         self,
         key: object,
         connection: mavutil.mavfile,
-        args,  # Put your own arguments here
         local_logger: logger.Logger,
     ) -> None:
         assert key is Telemetry.__private_key, "Use create() method"
 
         # Do any intializiation here
+        self.__connection = connection
+        self.__logger = local_logger
 
     def run(
         self,
-        args,  # Put your own arguments here
-    ):
+    ) -> TelemetryData | None:
         """
         Receive LOCAL_POSITION_NED and ATTITUDE messages from the drone,
         combining them together to form a single TelemetryData object.
@@ -106,7 +109,48 @@ class Telemetry:
         # Read MAVLink message LOCAL_POSITION_NED (32)
         # Read MAVLink message ATTITUDE (30)
         # Return the most recent of both, and use the most recent message's timestamp
-        pass
+        start_time = time.time()
+        alt_msg = None
+        pos_msg = None
+        recent_boot_time = None
+        
+        while time.time() - start_time <= 1:
+            try:
+                msg = self.__connection.recv_match()
+            except Exception as e:
+                self.__logger.error(f"Error while attempting to recieve telemetry: {e}")
+            if not msg:
+                continue
+
+            msg_type = msg.get_type()
+            if msg_type == "ATTITUDE":
+                alt_msg = msg
+            else:
+                pos_msg = msg
+            recent_boot_time = msg.time_boot_ms
+
+            if alt_msg and pos_msg:
+                break
+
+        if not alt_msg or not pos_msg:
+            self.__logger.warning("Timedout waiting for altitude and/or position")
+            return None
+        self.__logger.info("Successfully recieved data for Telemetry")
+        return TelemetryData(
+            recent_boot_time,
+            pos_msg.x,
+            pos_msg.y,
+            pos_msg.z,
+            pos_msg.vx,
+            pos_msg.vy,
+            pos_msg.vz,
+            alt_msg.roll,
+            alt_msg.pitch,
+            alt_msg.yaw,
+            alt_msg.rollspeed,
+            alt_msg.pitchspeed,
+            alt_msg.yawspeed
+        )
 
 
 # =================================================================================================

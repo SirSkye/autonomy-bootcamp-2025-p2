@@ -1,0 +1,25 @@
+22:27:55: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry_worker.py | telemetry_worker | 44] Logger initialized
+22:27:55: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:55: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:55: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:56: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:56: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:57: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:57: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:58: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:58: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:27:59: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:00: [WARNING] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 136] Timedout waiting for altitude and/or position
+22:28:01: [WARNING] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 136] Timedout waiting for altitude and/or position
+22:28:02: [WARNING] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 136] Timedout waiting for altitude and/or position
+22:28:02: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:03: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:03: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:04: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:04: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:05: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:05: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:06: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:06: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:07: [INFO] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 138] Successfully recieved data for Telemetry
+22:28:08: [WARNING] [C:\Users\aisha\WARG\autonomy-bootcamp-2025-p2\modules\telemetry\telemetry.py | run | 136] Timedout waiting for altitude and/or position
