@@ -37,46 +37,115 @@ class Command:  # pylint: disable=too-many-instance-attributes
         cls,
         connection: mavutil.mavfile,
         target: Position,
-        args,  # Put your own arguments here
+        height_tolerance: float,
+        yaw_tolerance: float,
+        z_speed: float,
+        turning_speed: float,
         local_logger: logger.Logger,
-    ):
+    ) -> "tuple[True, Command] | tuple[False, None]":
         """
         Falliable create (instantiation) method to create a Command object.
         """
-        pass  #  Create a Command object
+        try:
+            return True, Command(cls.__private_key, connection, target, height_tolerance, yaw_tolerance, z_speed, turning_speed, local_logger)
+        except Exception as e:
+            local_logger.info(f"Failed to create HeartbeatSender: {e}")
+            return False, None
 
     def __init__(
         self,
         key: object,
         connection: mavutil.mavfile,
         target: Position,
-        args,  # Put your own arguments here
+        height_tolerance: float,
+        yaw_tolerance: float,
+        z_speed: float,
+        turning_speed: float,
         local_logger: logger.Logger,
     ) -> None:
         assert key is Command.__private_key, "Use create() method"
 
         # Do any intializiation here
+        self.__connectioin = connection
+        self.__target = target
+        self.__height_tolerance = height_tolerance
+        self.__yaw_tolerance = yaw_tolerance
+        self.__z_speed = z_speed
+        self.__turning_speed = turning_speed
+        self.__logger = local_logger
+        self.__velocity_total = [0, 0, 0]
+        self.__velocity_count = 0
 
     def run(
         self,
-        args,  # Put your own arguments here
+        telemetry: telemetry.TelemetryData
     ):
         """
         Make a decision based on received telemetry data.
         """
         # Log average velocity for this trip so far
+        self.__velocity_total[0] += telemetry.x_velocity
+        self.__velocity_total[1] += telemetry.y_velocity
+        self.__velocity_total[2] += telemetry.z_velocity
+        self.__velocity_count += 1
+        self.__logger.info(f"Avg Velocities: {(self.__velocity_total[0] / self.__velocity_count, self.__velocity_total[1] / self.__velocity_count, self.__velocity_total[2] / self.__velocity_count)}")
 
         # Use COMMAND_LONG (76) message, assume the target_system=1 and target_componenet=0
         # The appropriate commands to use are instructed below
 
         # Adjust height using the comand MAV_CMD_CONDITION_CHANGE_ALT (113)
         # String to return to main: "CHANGE_ALTITUDE: {amount you changed it by, delta height in meters}"
+        delta_z = self.__target.z - telemetry.z
+        if abs(delta_z) > self.__height_tolerance:
+            try:
+                self.__connectioin.mav.command_long_send(
+                    1,
+                    0,
+                    mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
+                    0,
+                    self.__z_speed,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    self.__target.z,
+                )
+            except Exception as e:
+                self.__logger.info(f"Error sending alt command: {e}")
+                return None
+            return f"CHANGE_ALTITUDE: {delta_z}"
 
         # Adjust direction (yaw) using MAV_CMD_CONDITION_YAW (115). Must use relative angle to current state
         # String to return to main: "CHANGING_YAW: {degree you changed it by in range [-180, 180]}"
         # Positive angle is counter-clockwise as in a right handed system
+        desired_yaw = math.atan2(self.__target.y - telemetry.y, self.__target.x - telemetry.x)
+        delta_yaw = math.atan2(
+            math.sin(desired_yaw - telemetry.yaw),
+            math.cos(desired_yaw - telemetry.yaw),
+        )
+        yaw_error = math.degrees(delta_yaw)
 
-
+        if abs(yaw_error) > self.__yaw_tolerance:
+            try:
+                self.__connectioin.mav.command_long_send(
+                    1,
+                    0,
+                    mavutil.mavlink.MAV_CMD_CONDITION_YAW,
+                    0,
+                    yaw_error,
+                    self.__turning_speed,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                )
+            except Exception as e:
+                self.__logger.error(f"Error sending yaw command: {e}")
+            return f"CHANGE YAW: {yaw_error}"
+        return None
+        
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
 # =================================================================================================

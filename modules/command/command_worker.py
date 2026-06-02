@@ -19,8 +19,13 @@ from ..common.modules.logger import logger
 def command_worker(
     connection: mavutil.mavfile,
     target: command.Position,
-    args,  # Place your own arguments here
-    # Add other necessary worker arguments here
+    height_tolerance: float,
+    yaw_tolerance: float,
+    z_speed: float,
+    turning_speed: float,
+    input_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    output_queue: queue_proxy_wrapper.QueueProxyWrapper,
+    controller: worker_controller.WorkerController
 ) -> None:
     """
     Worker process.
@@ -48,9 +53,32 @@ def command_worker(
     #                          ↓ BOOTCAMPERS MODIFY BELOW THIS COMMENT ↓
     # =============================================================================================
     # Instantiate class object (command.Command)
-
+    result, sender = command.Command.create(
+        connection,
+        target,
+        height_tolerance,
+        yaw_tolerance,
+        z_speed,
+        turning_speed,
+        local_logger,
+    )
+    if not result:
+        return
+    
     # Main loop: do work.
+    while not controller.is_exit_requested():
+        try:
+            telemetry_data = input_queue.queue.get(block=False)
+        except:
+            continue
 
+        if telemetry_data is None:
+            continue
+
+        output = sender.run(telemetry_data)
+        if not output:
+            continue
+        output_queue.queue.put(output)
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
