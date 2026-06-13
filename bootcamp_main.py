@@ -139,7 +139,7 @@ def main() -> int:
     result, telemetry_properties = worker_manager.WorkerProperties.create(
         TELEMETRY_WORKER_COUNT,
         telemetry_worker.telemetry_worker,
-        (connection),
+        (connection,),
         [],
         [telemetry_to_command_queue],
         controller,
@@ -213,7 +213,7 @@ def main() -> int:
         try:
             command_output = command_to_main_queue.queue.get(block=False)
             main_logger.info(f"Command output: {command_output}")
-        except queue.empty:
+        except queue.Empty:
             pass
 
     # Stop the processes

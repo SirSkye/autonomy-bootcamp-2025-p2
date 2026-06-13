@@ -29,7 +29,7 @@ class HeartbeatReceiver:
         try:
             return True, HeartbeatReceiver(cls.__private_key, connection, local_logger)
         except Exception as e:  # pylint: disable=broad-exception-caught
-            local_logger.info(f"Failed to create HeartbeatSender: {e}")
+            local_logger.info(f"Failed to create HeartbeatReceiver: {e}")
             return False, None
 
     def __init__(

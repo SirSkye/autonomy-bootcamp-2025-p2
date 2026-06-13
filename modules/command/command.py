@@ -58,7 +58,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
                 local_logger,
             )
         except Exception as e:  # pylint: disable=broad-exception-caught
-            local_logger.info(f"Failed to create HeartbeatSender: {e}")
+            local_logger.info(f"Failed to create Command: {e}")
             return False, None
 
     def __init__(
@@ -75,7 +75,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
         assert key is Command.__private_key, "Use create() method"
 
         # Do any intializiation here
-        self.__connectioin = connection
+        self.__connection = connection
         self.__target = target
         self.__height_tolerance = height_tolerance
         self.__yaw_tolerance = yaw_tolerance
@@ -106,7 +106,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
         delta_z = self.__target.z - telemetry_data.z
         if abs(delta_z) > self.__height_tolerance:
             try:
-                self.__connectioin.mav.command_long_send(
+                self.__connection.mav.command_long_send(
                     1,
                     0,
                     mavutil.mavlink.MAV_CMD_CONDITION_CHANGE_ALT,
@@ -138,7 +138,7 @@ class Command:  # pylint: disable=too-many-instance-attributes
 
         if abs(yaw_error) > self.__yaw_tolerance:
             try:
-                self.__connectioin.mav.command_long_send(
+                self.__connection.mav.command_long_send(
                     1,
                     0,
                     mavutil.mavlink.MAV_CMD_CONDITION_YAW,

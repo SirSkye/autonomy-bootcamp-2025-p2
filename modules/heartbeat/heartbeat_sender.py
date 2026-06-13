@@ -50,7 +50,7 @@ class HeartbeatSender:
             self.__logger.info("Heartbeat send successfully")
             return True
         except Exception as e:  # pylint: disable=broad-exception-caught
-            self.logger.error(f"Failed to send heartbeat: {e}")
+            self.__logger.error(f"Failed to send heartbeat: {e}")
             return False
 
 

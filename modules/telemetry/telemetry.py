@@ -119,23 +119,24 @@ class Telemetry:
                 msg = self.__connection.recv_match()
             except Exception as e:  # pylint: disable=broad-exception-caught
                 self.__logger.error(f"Error while attempting to recieve telemetry: {e}")
-            if not msg:
                 continue
 
             msg_type = msg.get_type()
             if msg_type == "ATTITUDE":
                 alt_msg = msg
-            else:
+            elif msg_type == "LOCAL_POSITION_NED":
                 pos_msg = msg
+            else:
+                continue
             recent_boot_time = msg.time_boot_ms
 
             if alt_msg and pos_msg:
                 break
 
         if not alt_msg or not pos_msg:
-            self.__logger.warning("Timedout waiting for altitude and/or position")
+            self.__logger.warning("Timed out waiting for altitude and/or position")
             return None
-        self.__logger.info("Successfully recieved data for Telemetry")
+        self.__logger.info("Successfully received data for Telemetry")
         return TelemetryData(
             recent_boot_time,
             pos_msg.x,
